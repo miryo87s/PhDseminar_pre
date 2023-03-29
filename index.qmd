@@ -279,9 +279,9 @@ $$
 (GMM Influence Function allowing for Misspecification)
 
 $$
-\nabla\theta(D_i) = - \left[M\mathbb{E}[\partial_\theta\text{vec}(G(X_i, \theta_*)')] + G'WG\right]^{-1} \left[M\text{vec}(G(X_i, \theta_*)') + G'Wg(X_i, \theta_*)\right]
+\nabla\theta(D_i) = - \left[M\mathbb{E}[\partial_\theta\text{vec}(G(D_i, \theta_*)')] + G'WG\right]^{-1} \left[M\text{vec}(G(D_i, \theta_*)') + G'Wg(D_i, \theta_*)\right]
 $$
-where $G = \mathbb{E}[\partial_\theta g(X_i, \theta_*)]$ and $M = \mathbb{E}[g(X_i, \theta_*)]'W \otimes I_p$
+where $G = \mathbb{E}[\partial_\theta g(D_i, \theta_*)]$ and $M = \mathbb{E}[g(D_i, \theta_*)]'W \otimes I_p$
 
 :::
 
@@ -302,6 +302,24 @@ $$\begin{aligned}
 Therefore, under correct specification $\Lambda = \Lambda^{AGS}$
 
 :::
+
+## Decompose the Influence Function
+
+$$
+\nabla\theta(D_i) = - \left[\underbrace{M\mathbb{E}[\partial_\theta\text{vec}(G(D_i, \theta_*)')]}_{A} + \underbrace{G'WG}_{B}\right]^{-1} \left[\underbrace{M\text{vec}(G(D_i, \theta_*)')}_{C} + \underbrace{G'Wg(D_i, \theta_*)}_{D}\right]
+$$
+
+Correct specification: $\nabla\theta(D_i) = B^{-1}D$
+
+Misspecification: $\nabla\theta(D_i) = (A + B)^{-1}(C + D)$
+
+- $A$ is contains the Hessian, capturing the nonlinearity of the moment. For linear moment (OLS, IV), $A = 0$
+- $C$ is an extra variation added to $D$
+
+For linear moment
+
+- $\Lambda = \frac{Cov((B^{-1}C, g(D_i, \theta_*))}{Var(g(D_i, \theta_*))} + \Lambda^{AGS}$
+
 
 ## Estimator of $\Lambda$
 
@@ -333,6 +351,8 @@ $\frac{\Lambda_1}{\Lambda_1 + \Lambda_2}$ is expected to be $\alpha$
 
 <hr>
 
+::: {.fragment}
+
 With 2SLS weight matrix $W = \left(\frac1n Z'Z\right)^{-1}$
 
 |           | AGS Sensitivity | Misspecification Sensitivity |
@@ -341,12 +361,16 @@ With 2SLS weight matrix $W = \left(\frac1n Z'Z\right)^{-1}$
 | Two-girls | 69.9068         | 76.7902                      |
 | Ratio     | 0.41            | 0.38                         |
 
+:::
+
 ## Conclusion
 
 - We extend AGS sensitivity to allow for misspecification
 - Sensitivity of the pseudo-true parameter to the moment conditions
 - The GMM influence function we derived is useful for asymptotic analysis under misspecification
 - We use an application to show the improvement over AGS sensitivity
+
+<br>
 
 ### Future Works
 

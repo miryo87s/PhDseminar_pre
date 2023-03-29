@@ -368,7 +368,7 @@ PhD Seminar
 Seojeong (Jay) Lee &amp; Fangzhou Yu
 </h3>
 <h3>
-2023-03-29
+2023-03-30
 </h3>
 <p><br></p>
 <p><img data-src="unsw.png" class="absolute" style="top: 370px; left: 1400px; width: 400px; "></p>
@@ -579,8 +579,8 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <div class="callout-content">
 <p>(GMM Influence Function allowing for Misspecification)</p>
 <p><span class="math display">\[
-\nabla\theta(D_i) = - \left[M\mathbb{E}[\partial_\theta\text{vec}(G(X_i, \theta_*)')] + G'WG\right]^{-1} \left[M\text{vec}(G(X_i, \theta_*)') + G'Wg(X_i, \theta_*)\right]
-\]</span> where <span class="math inline">\(G = \mathbb{E}[\partial_\theta g(X_i, \theta_*)]\)</span> and <span class="math inline">\(M = \mathbb{E}[g(X_i, \theta_*)]'W \otimes I_p\)</span></p>
+\nabla\theta(D_i) = - \left[M\mathbb{E}[\partial_\theta\text{vec}(G(D_i, \theta_*)')] + G'WG\right]^{-1} \left[M\text{vec}(G(D_i, \theta_*)') + G'Wg(D_i, \theta_*)\right]
+\]</span> where <span class="math inline">\(G = \mathbb{E}[\partial_\theta g(D_i, \theta_*)]\)</span> and <span class="math inline">\(M = \mathbb{E}[g(D_i, \theta_*)]'W \otimes I_p\)</span></p>
 </div>
 </div>
 </div>
@@ -594,7 +594,24 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 \end{aligned}\]</span></p>
 <p>Therefore, under correct specification <span class="math inline">\(\Lambda = \Lambda^{AGS}\)</span></p>
 </div>
-</section><section id="estimator-of-lambda" class="slide level2"><h2>Estimator of <span class="math inline">\(\Lambda\)</span>
+</section><section id="decompose-the-influence-function" class="slide level2"><h2>Decompose the Influence Function</h2>
+<p><span class="math display">\[
+\nabla\theta(D_i) = - \left[\underbrace{M\mathbb{E}[\partial_\theta\text{vec}(G(D_i, \theta_*)')]}_{A} + \underbrace{G'WG}_{B}\right]^{-1} \left[\underbrace{M\text{vec}(G(D_i, \theta_*)')}_{C} + \underbrace{G'Wg(D_i, \theta_*)}_{D}\right]
+\]</span></p>
+<p>Correct specification: <span class="math inline">\(\nabla\theta(D_i) = B^{-1}D\)</span></p>
+<p>Misspecification: <span class="math inline">\(\nabla\theta(D_i) = (A + B)^{-1}(C + D)\)</span></p>
+<ul>
+<li>
+<span class="math inline">\(A\)</span> is contains the Hessian, capturing the nonlinearity of the moment. For linear moment (OLS, IV), <span class="math inline">\(A = 0\)</span>
+</li>
+<li>
+<span class="math inline">\(C\)</span> is an extra variation added to <span class="math inline">\(D\)</span>
+</li>
+</ul>
+<p>For linear moment</p>
+<ul>
+<li><span class="math inline">\(\Lambda = \frac{Cov((B^{-1}C, g(D_i, \theta_*))}{Var(g(D_i, \theta_*))} + \Lambda^{AGS}\)</span></li>
+</ul></section><section id="estimator-of-lambda" class="slide level2"><h2>Estimator of <span class="math inline">\(\Lambda\)</span>
 </h2>
 <ul>
 <li>In practice, we do not have access to <span class="math inline">\(\nabla\theta\)</span> and <span class="math inline">\(\nabla\gamma\)</span>
@@ -618,6 +635,7 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <p>In this application, <span class="math inline">\(\alpha = 0.38\)</span></p>
 <p><span class="math inline">\(\frac{\Lambda_1}{\Lambda_1 + \Lambda_2}\)</span> is expected to be <span class="math inline">\(\alpha\)</span></p>
 <hr>
+<div class="fragment">
 <p>With 2SLS weight matrix <span class="math inline">\(W = \left(\frac1n Z'Z\right)^{-1}\)</span></p>
 <table>
 <thead><tr class="header">
@@ -642,13 +660,16 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <td style="text-align: center;">0.38</td>
 </tr>
 </tbody>
-</table></section><section id="conclusion" class="slide level2"><h2>Conclusion</h2>
+</table>
+</div>
+</section><section id="conclusion" class="slide level2"><h2>Conclusion</h2>
 <ul>
 <li>We extend AGS sensitivity to allow for misspecification</li>
 <li>Sensitivity of the pseudo-true parameter to the moment conditions</li>
 <li>The GMM influence function we derived is useful for asymptotic analysis under misspecification</li>
 <li>We use an application to show the improvement over AGS sensitivity</li>
 </ul>
+<p><br></p>
 <h3 id="future-works">Future Works</h3>
 <ul>
 <li>How the extra terms in the influence function affect the sensitivity</li>
