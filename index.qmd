@@ -163,7 +163,7 @@ $\Vert \mu(\theta) \Vert > 0$ for all $\theta \in \Theta$.
 
 :::
 
-- This kind of misspecification only exists in over-identified GMM, $q < p$
+- This kind of misspecification only exists in over-identified GMM, $q > p$
 - If $q = p$, there must exist a solution to the moment conditions
 
 ::: {.fragment}
@@ -194,7 +194,7 @@ $$
 
 (Sensitivity)
 
-The sensitivity of a statistical functional $\theta(P)$ to another statistical $\gamma(P)$ is the directional 
+The sensitivity of a statistical functional $\theta(P)$ to another $\gamma(P)$ is the directional 
 
 derivative along the gradient vector $\nabla \gamma$:
 $$
@@ -264,7 +264,7 @@ The remaining problem is to find the influence functions $\nabla\theta$ and $\na
 
 For a regular estimator $\hat\theta$, the influence function is $\nabla\theta$ such that
 $$
-\sqrt{n}(\hat\theta - \theta_*) = \frac{1}{\sqrt{n}}\sum_{i = 1}^n \nabla\theta(D_i) + o_p(1), \ \mathbb{E}[\nabla\theta(D)] = 0
+\sqrt{n}(\hat\theta - \theta_*) = \frac{1}{\sqrt{n}}\sum_{i = 1}^n \nabla\theta(D_i) + o_p(1)
 $$
 
 - Luckily, $\nabla\gamma(D_i) = g(D_i, \theta_*) - \mathbb{E}[g(D_i, \theta_*)]$
@@ -332,7 +332,8 @@ For linear moment
 ::: {.fragment}
 
 - If the specification is correct, we expect $\frac1n \sum_i g(X_i, \theta_*) \approx 0$ in large samples
-- There is little difference in $\nabla\theta(D_i)$ under mis or correct specification
+- Plugging in $M$, then $A, C \approx 0$
+- There is little difference in $\Lambda$ and $\Lambda^{AGS}$ under correct specification
 - [Thus, in large samples, our method has no loss compared with AGS under correct specification]{.blue}
 
 :::

@@ -482,7 +482,7 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 </div>
 </div>
 <ul>
-<li>This kind of misspecification only exists in over-identified GMM, <span class="math inline">\(q &lt; p\)</span>
+<li>This kind of misspecification only exists in over-identified GMM, <span class="math inline">\(q &gt; p\)</span>
 </li>
 <li>If <span class="math inline">\(q = p\)</span>, there must exist a solution to the moment conditions</li>
 </ul>
@@ -513,7 +513,7 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <div class="callout-body">
 <div class="callout-content">
 <p>(Sensitivity)</p>
-<p>The sensitivity of a statistical functional <span class="math inline">\(\theta(P)\)</span> to another statistical <span class="math inline">\(\gamma(P)\)</span> is the directional</p>
+<p>The sensitivity of a statistical functional <span class="math inline">\(\theta(P)\)</span> to another <span class="math inline">\(\gamma(P)\)</span> is the directional</p>
 <p>derivative along the gradient vector <span class="math inline">\(\nabla \gamma\)</span>: <span class="math display">\[
 \partial_\gamma \theta = \lim_{h \rightarrow 0} h^{-1} [\theta(P + h \cdot \nabla\gamma) - \theta(P)]
 \]</span></p>
@@ -564,7 +564,7 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <hr>
 <div class="fragment">
 <p>For a regular estimator <span class="math inline">\(\hat\theta\)</span>, the influence function is <span class="math inline">\(\nabla\theta\)</span> such that <span class="math display">\[
-\sqrt{n}(\hat\theta - \theta_*) = \frac{1}{\sqrt{n}}\sum_{i = 1}^n \nabla\theta(D_i) + o_p(1), \ \mathbb{E}[\nabla\theta(D)] = 0
+\sqrt{n}(\hat\theta - \theta_*) = \frac{1}{\sqrt{n}}\sum_{i = 1}^n \nabla\theta(D_i) + o_p(1)
 \]</span></p>
 <ul>
 <li>Luckily, <span class="math inline">\(\nabla\gamma(D_i) = g(D_i, \theta_*) - \mathbb{E}[g(D_i, \theta_*)]\)</span>
@@ -624,7 +624,9 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <div class="fragment">
 <ul>
 <li>If the specification is correct, we expect <span class="math inline">\(\frac1n \sum_i g(X_i, \theta_*) \approx 0\)</span> in large samples</li>
-<li>There is little difference in <span class="math inline">\(\nabla\theta(D_i)\)</span> under mis or correct specification</li>
+<li>Plugging in <span class="math inline">\(M\)</span>, then <span class="math inline">\(A, C \approx 0\)</span>
+</li>
+<li>There is little difference in <span class="math inline">\(\Lambda\)</span> and <span class="math inline">\(\Lambda^{AGS}\)</span> under correct specification</li>
 <li><span class="blue">Thus, in large samples, our method has no loss compared with AGS under correct specification</span></li>
 </ul>
 </div>
