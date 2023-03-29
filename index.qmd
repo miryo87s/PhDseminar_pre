@@ -31,7 +31,7 @@ editor:
 
 ```
 
-<h1>Sensitivity Analysis of GMM Estimators under Misspecification</h1>
+<h1>Sensitivity Analysis of GMM Estimators <br> under Misspecification</h1>
 
 <h2>PhD Seminar</h2>
 
