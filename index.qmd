@@ -1,0 +1,360 @@
+---
+format: 
+  revealjs:
+    theme: ["theme/q-theme.scss"]
+    slide-number: c/t
+    logo: "unsw-long.png"
+    footer: "PhD Seminar"
+    code-copy: true
+    center-title-slide: false
+    include-in-header: heading-meta.html
+    code-link: true
+    code-overflow: wrap
+    highlight-style: a11y
+    height: 1080
+    width: 1920
+    fontsize: 28pt
+    linestretch: 1.7
+    auto-stretch: false
+    html-math-method: mathjax
+callout-appearance: simple
+callout-icon: false
+bibliography: ref.bib
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r}
+#| echo: false
+#| include: false
+
+```
+
+<h1>Sensitivity Analysis of GMM Estimators under Misspecification</h1>
+
+<h2>PhD Seminar</h2>
+
+<hr>
+
+<h3>Seojeong (Jay) Lee & Fangzhou Yu</h3>
+
+<h3>`r Sys.Date()`</h3>
+
+<br>
+
+![](unsw.png){.absolute top="370" left="1400" width="400"}
+
+## Recap of AGS Sensitivity 
+
+Sensitivity Measure in @andrews2017measuring:
+
+Given the $q$-dimensional moment function $g(D_i, \theta)$ where $D_i$ represents the data, 
+
+and $\theta$ is $p$ parameters of interest
+
+the GMM estimator is 
+$$
+\hat\theta = \arg \min_{\theta \in \Theta} \hat{g}(\theta)\hat{W}\hat{g}(\theta)
+$$
+
+Under [correct specification, that is $\mathbb{E}[g(D_i, \theta_0)] = 0$]{.blue}
+
+Suppose $\sqrt{n}(\hat\theta - \theta_0) \xrightarrow{d} \tilde{\theta}$, $\sqrt{n}\hat{g}(\theta_0) \xrightarrow{d} \tilde{g}$, then
+$$
+\tilde\theta = \Lambda^{AGS} \tilde{g}
+$$
+where
+$$
+\Lambda^{AGS} = - [G'WG]^{-1}G'W
+$$
+is the [AGS sensitivity]{.blue} with $G = \mathbb{E}[\partial_\theta g(D_i, \theta_0)]$ and some deterministic weight matrix $W$.
+
+## Violation of Correct Specification
+
+AGS sensitivity is derived under correct specification $\mathbb{E}[g(D_i, \theta_0)] = 0$
+
+This condition is usually a concern in over-identified GMM
+
+<hr>
+
+::: {.fragment}
+
+Example: 2SLS in @angrist1998children
+
+- Treatment effect of having more children on mother's labor supply
+- One binary treatment $D$: whether a family has more than 2 children
+- Two binary instruments: the first two children are both *boys*($Z_1$) or both *girls*($Z_2$)
+- [Local Average Treatment Effects are instrument-specific]{.blue} [@angrist1995two; @lee2018consistent]
+
+:::: {.columns}
+
+::: {.column width="50%}
+
+| Estimator     | $\hat\theta$ |
+|---------------|:------------:|
+| 2SLS(both)    | -0.1128      |
+| IV(two-boys)  | -0.2011      |
+| IV(two-girls) | -0.0591      |
+
+:::
+
+::: {.column width="50%}
+
+2SLS differs from each IV estimate because
+$$
+\mathbb{E}\begin{bmatrix} Z_{1i}(Y_i - D_i \theta) \\ Z_{2i}(Y_i - D_i \theta) \end{bmatrix} \neq 0
+$$
+
+:::
+
+::::
+
+:::
+
+## Misspecification in Over-identified GMM
+
+1. Can happen even if every moment is correctly specified: 2SLS
+2. Large number of moments that are not indicated by the model: Simulated Method of Moments
+
+::: {.fragment}
+
+- Misspecification is appropriate when model is viewed as approximation rather than as literally true
+- Under misspecification, GMM estimands are still well-accepted
+  - 2SLS are convex combination of the two IV estimates [@angrist1995two; @lee2018consistent]
+  - SMM is popular when moments are hard to find [@gourieroux1996simulation]
+- The asymptotic theory under misspecification has been studied by [@hall2003large; @hansen2021inference]
+
+:::
+
+<br>
+
+::: {.fragment}
+
+[Our main goal is to develop sensitivity analysis for GMM allowing for misspecification]{.blue}
+
+:::
+
+## Contributions
+
+1. Extend @andrews2017measuring to allow for misspecification
+  - **Under misspecification, $\tilde{\theta} = \Lambda^{AGS}\tilde{g}$ does not hold**
+  - New general definition of sensitivity by functional derivative
+  - AGS is a special case when specification is correct
+  - No cost with large samples if the moments are in fact correct
+
+<br>
+
+2. Derive the influence function of GMM under misspecification
+  - Influence function-based asymptotic distribution
+  - Alternative way to @hall2003large, @hansen2021inference
+
+
+## Global Misspecification
+
+::: {.callout-tip #def-mismodel}
+
+(Misspecified Models)
+
+A model is said to be misspecified if there is no value of $\theta$ which satisfies the orthogonality condition,
+
+that is $\mathbb{E}[g(D_i, \theta)] = \mu(\theta)$ where $\mu: \Theta \rightarrow \mathbb{R}^q$ such that
+$\Vert \mu(\theta) \Vert > 0$ for all $\theta \in \Theta$.
+
+:::
+
+- This kind of misspecification only exists in over-identified GMM, $q < p$
+- If $q = p$, there must exist a solution to the moment conditions
+
+::: {.fragment}
+
+::: {.callout-warning #ass-exist}
+
+**Assumption 1** (Identification allowing for Misspecification)
+
+There exists $\theta_* \in \Theta$ such that $Q(\theta_*) < Q(\theta), \forall \theta \in \Theta \setminus \{\theta_*\}$, where $Q(\theta) = g(\theta)'Wg(\theta)$ and $g(\theta) = \mathbb{E}[g(D_i, \theta)]$
+
+:::
+
+- $\theta_*$ is call the pseudo-true parameter
+- @hall2000covariance: $\hat\theta \xrightarrow{p} \theta_*$
+
+:::
+
+## Sensitivity by Directional Derivative
+
+We assume that data $D_i$ is generated by model $P$
+
+Consider two one-dimensional parameters $\theta$ and $\gamma$ as statistical functionals
+$$
+\theta, \gamma: \mathcal{P} \rightarrow \mathbb{R}
+$$
+
+::: {.callout-tip #def-sensitivity}
+
+(Sensitivity)
+
+The sensitivity of a statistical functional $\theta(P)$ to another statistical $\gamma(P)$ is the directional 
+
+derivative along the gradient vector $\nabla \gamma$:
+$$
+\partial_\gamma \theta = \lim_{h \rightarrow 0} h^{-1} [\theta(P + h \cdot \nabla\gamma) - \theta(P)]
+$$
+
+:::
+
+Note:
+
+- Intuitive definition because sensitivity is a measure of local change, just like directional derivative
+- The definition is general to any parameter $\gamma$
+- [We only focus on $\gamma = \mathbb{E}[g(D_i, \theta_*)]$]{.blue}
+
+
+## Information Sensitivity
+
+Based on @def-sensitivity, we have
+$$
+\partial_\gamma \theta := d\theta(\nabla\gamma) = \langle \nabla\theta, \nabla\gamma \rangle
+$$
+
+Now we need to choose a geometry metric to derive $\nabla$ and $\langle \rangle$.
+
+::: {.fragment}
+
+::: {.callout-note #prp-deriv}
+
+(Directional Derivative)
+
+Let $(P, \langle \cdot, \cdot \rangle)$ be a statistical model and Fisher Information metric,
+
+then $\partial_\gamma \theta = Cov(\nabla\theta, \nabla\gamma)$ where $\nabla\theta$ is the influence function of $\theta(P)$
+
+:::
+
+:::
+
+::: {.fragment}
+
+::: {.callout-tip #def-info}
+
+(Information Sensitivity)
+
+Information sensitivity $\Lambda$ is $\partial_\gamma \theta$ normalized by the squared norm of $\nabla\gamma$
+$$
+\Lambda = \frac{\partial_\gamma \theta}{\vert \nabla\gamma \vert^2} = \frac{Cov(\nabla\theta, \nabla\gamma)} {Var(\nabla\gamma)}
+$$
+
+:::
+
+:::
+
+## Regression of Influence Functions
+
+Note that $\Lambda = \frac{Cov(\nabla\theta, \nabla\gamma)} {Var(\nabla\gamma)}$ is the linear regression coefficient
+
+[Extension to multi-dimensional $\gamma$ is straight forward by analogy of regression:]{.blue}
+
+[projection of $\nabla\theta$ onto the linear span of $\nabla\gamma_1, ..., \nabla\gamma_q$]{.blue}
+
+The remaining problem is to find the influence functions $\nabla\theta$ and $\nabla\gamma$
+
+<hr>
+
+::: {.fragment}
+
+For a regular estimator $\hat\theta$, the influence function is $\nabla\theta$ such that
+$$
+\sqrt{n}(\hat\theta - \theta_*) = \frac{1}{\sqrt{n}}\sum_{i = 1}^n \nabla\theta(D_i) + o_p(1), \ \mathbb{E}[\nabla\theta(D)] = 0
+$$
+
+- Luckily, $\nabla\gamma(D_i) = g(D_i, \theta_*) - \mathbb{E}[g(D_i, \theta_*)]$
+- Need to find $\nabla\theta$ under misspecification
+
+:::
+
+## Influence Function of GMM 
+
+::: {.callout-note #prp-if}
+
+(GMM Influence Function allowing for Misspecification)
+
+$$
+\nabla\theta(D_i) = - \left[M\mathbb{E}[\partial_\theta\text{vec}(G(X_i, \theta_*)')] + G'WG\right]^{-1} \left[M\text{vec}(G(X_i, \theta_*)') + G'Wg(X_i, \theta_*)\right]
+$$
+where $G = \mathbb{E}[\partial_\theta g(X_i, \theta_*)]$ and $M = \mathbb{E}[g(X_i, \theta_*)]'W \otimes I_p$
+
+:::
+
+[With $\nabla\theta$ and $\nabla\gamma$ in hand, we just need to regress $\nabla\theta$ on $\nabla\gamma$ to obtain $\Lambda$]{.blue}
+
+::: {.fragment}
+
+Note:
+
+Under correct specification, $\theta_* = \theta_0$ and $\mathbb{E}[g(D_i, \theta_0)] = 0$
+
+$\nabla\theta$ reduces to 
+$$\begin{aligned}
+\nabla\theta &= - \left[G'WG\right]^{-1}G'Wg(D_i, \theta_0) \\
+&= - \left[G'WG\right]^{-1}G'W \nabla\gamma
+\end{aligned}$$
+
+Therefore, under correct specification $\Lambda = \Lambda^{AGS}$
+
+:::
+
+## Estimator of $\Lambda$
+
+- In practice, we do not have access to $\nabla\theta$ and $\nabla\gamma$
+- Just plug in the sample counterparts in the influence functions and run the regression
+- The OLS estimator of the coefficients are consistent for $\Lambda$
+
+<br>
+
+::: {.fragment}
+
+- If the specification is correct, we expect $\frac1n \sum_i g(X_i, \theta_*) \approx 0$ in large samples
+- There is little difference in $\nabla\theta(D_i)$ under mis or correct specification
+- [Thus, in large samples, our method has no loss compared with AGS under correct specification]{.blue}
+
+:::
+
+## Application
+
+2SLS in @angrist1998children
+
+The two instruments identifies two LATEs: $\theta_1$ and $\theta_2$
+
+@angrist1995two: 2SLS estimator $\hat\theta = \alpha \hat\theta_1 + (1 - \alpha)\hat\theta_2$
+
+In this application, $\alpha = 0.38$
+
+$\frac{\Lambda_1}{\Lambda_1 + \Lambda_2}$ is expected to be $\alpha$
+
+<hr>
+
+With 2SLS weight matrix $W = \left(\frac1n Z'Z\right)^{-1}$
+
+|           | AGS Sensitivity | Misspecification Sensitivity |
+|-----------|:---------------:|:----------------------------:|
+| Two-boys  | 49.2054         | 47.2531                      |
+| Two-girls | 69.9068         | 76.7902                      |
+| Ratio     | 0.41            | 0.38                         |
+
+## Conclusion
+
+- We extend AGS sensitivity to allow for misspecification
+- Sensitivity of the pseudo-true parameter to the moment conditions
+- The GMM influence function we derived is useful for asymptotic analysis under misspecification
+- We use an application to show the improvement over AGS sensitivity
+
+### Future Works
+
+- How the extra terms in the influence function affect the sensitivity
+- Extension to $W(\theta)$ instead of deterministic $W$ because the weight matrix is important under misspecification 
+- More illustrative applications
+
+
+
+
+# References
