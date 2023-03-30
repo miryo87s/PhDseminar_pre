@@ -361,11 +361,11 @@ $\frac{\Lambda_1}{\Lambda_1 + \Lambda_2}$ is expected to be $\alpha$
 
 With 2SLS weight matrix $W = \left(\frac1n Z'Z\right)^{-1}$
 
-|           | AGS Sensitivity | Misspecification Sensitivity |
-|-----------|:---------------:|:----------------------------:|
-| Two-boys  | 49.2054         | 47.2531                      |
-| Two-girls | 69.9068         | 76.7902                      |
-| Ratio     | 0.41            | 0.38                         |
+|                       | AGS Sensitivity | Misspecification Sensitivity |
+|-----------------------|:---------------:|:----------------------------:|
+| Two-boys $\Lambda_1$                      | 49.2054         | 47.2531                      |
+| Two-girls $\Lambda_2$                     | 69.9068         | 76.7902                      |
+| $\frac{\Lambda_1}{\Lambda_1 + \Lambda_2}$ | 0.41            | 0.38                         |
 
 :::
 
