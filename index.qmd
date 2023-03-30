@@ -241,7 +241,7 @@ then $\partial_\gamma \theta = Cov(\nabla\theta, \nabla\gamma)$ where $\nabla\th
 
 Information sensitivity $\Lambda$ is $\partial_\gamma \theta$ normalized by the squared norm of $\nabla\gamma$
 $$
-\Lambda = \frac{\partial_\gamma \theta}{\vert \nabla\gamma \vert^2} = \frac{Cov(\nabla\theta, \nabla\gamma)} {Var(\nabla\gamma)}
+\Lambda = \frac{\partial_\gamma \theta}{\Vert \nabla\gamma \Vert^2} = \frac{Cov(\nabla\theta, \nabla\gamma)} {Var(\nabla\gamma)}
 $$
 
 :::
