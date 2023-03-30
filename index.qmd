@@ -17,6 +17,7 @@ format:
     linestretch: 1.7
     auto-stretch: false
     html-math-method: mathjax
+    chalkboard: true
 callout-appearance: simple
 callout-icon: false
 bibliography: ref.bib
