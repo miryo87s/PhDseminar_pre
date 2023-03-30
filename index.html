@@ -617,16 +617,16 @@ Seojeong (Jay) Lee &amp; Fangzhou Yu
 <li>In practice, we do not have access to <span class="math inline">\(\nabla\theta\)</span> and <span class="math inline">\(\nabla\gamma\)</span>
 </li>
 <li>Just plug in the sample counterparts in the influence functions and run the regression</li>
-<li>The OLS estimator of the coefficients are consistent for <span class="math inline">\(\Lambda\)</span>
-</li>
 </ul>
-<p><br></p>
+<p><span class="math display">\[\begin{aligned}
+\widehat{\nabla\gamma}(D_i) &amp;=  g(D_i, \hat\theta) - \frac1n \sum_i^n g(D_i, \hat\theta) \\
+\widehat{\nabla\theta}(D_i) &amp;= - \left[\hat{M}\frac1n\sum_i^n[\partial_\theta\text{vec}(G(D_i, \hat\theta)')] + \hat{G}'\hat{W}\hat{G}\right]^{-1} \left[\hat{M}\text{vec}(G(D_i, \hat\theta)') + \hat{G}'\hat{W}g(D_i, \hat\theta)\right]
+\end{aligned}\]</span> where <span class="math inline">\(\hat{M} = \frac1n\sum_i[g(D_i, \hat\theta)]'\hat{W} \otimes I_p\)</span></p>
+<p>Then run the regression <span class="math inline">\(\widehat{\nabla\theta}(D_i) \sim \widehat{\nabla\gamma}(D_i)\)</span> to obtain coefficient <span class="math inline">\(\hat\Lambda\)</span>, and <span class="blue"><span class="math inline">\(\hat\Lambda \xrightarrow{p} \Lambda\)</span></span></p>
 <div class="fragment">
 <ul>
 <li>If the specification is correct, we expect <span class="math inline">\(\frac1n \sum_i g(X_i, \theta_*) \approx 0\)</span> in large samples</li>
-<li>Plugging in <span class="math inline">\(M\)</span>, then <span class="math inline">\(A, C \approx 0\)</span>
-</li>
-<li>There is little difference in <span class="math inline">\(\Lambda\)</span> and <span class="math inline">\(\Lambda^{AGS}\)</span> under correct specification</li>
+<li>The difference in <span class="math inline">\(\hat\Lambda\)</span> and <span class="math inline">\(\hat\Lambda^{AGS}\)</span> is negligible under correct specification</li>
 <li><span class="blue">Thus, in large samples, our method has no loss compared with AGS under correct specification</span></li>
 </ul>
 </div>

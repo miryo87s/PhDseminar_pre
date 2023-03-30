@@ -325,15 +325,19 @@ For linear moment
 
 - In practice, we do not have access to $\nabla\theta$ and $\nabla\gamma$
 - Just plug in the sample counterparts in the influence functions and run the regression
-- The OLS estimator of the coefficients are consistent for $\Lambda$
 
-<br>
+$$\begin{aligned}
+\widehat{\nabla\gamma}(D_i) &=  g(D_i, \hat\theta) - \frac1n \sum_i^n g(D_i, \hat\theta) \\
+\widehat{\nabla\theta}(D_i) &= - \left[\hat{M}\frac1n\sum_i^n[\partial_\theta\text{vec}(G(D_i, \hat\theta)')] + \hat{G}'\hat{W}\hat{G}\right]^{-1} \left[\hat{M}\text{vec}(G(D_i, \hat\theta)') + \hat{G}'\hat{W}g(D_i, \hat\theta)\right]
+\end{aligned}$$
+where $\hat{M} = \frac1n\sum_i[g(D_i, \hat\theta)]'\hat{W} \otimes I_p$
+
+Then run the regression $\widehat{\nabla\theta}(D_i) \sim \widehat{\nabla\gamma}(D_i)$ to obtain coefficient $\hat\Lambda$, and [$\hat\Lambda \xrightarrow{p} \Lambda$]{.blue}
 
 ::: {.fragment}
 
 - If the specification is correct, we expect $\frac1n \sum_i g(X_i, \theta_*) \approx 0$ in large samples
-- Plugging in $M$, then $A, C \approx 0$
-- There is little difference in $\Lambda$ and $\Lambda^{AGS}$ under correct specification
+- The difference in $\hat\Lambda$ and $\hat\Lambda^{AGS}$ is negligible under correct specification
 - [Thus, in large samples, our method has no loss compared with AGS under correct specification]{.blue}
 
 :::
